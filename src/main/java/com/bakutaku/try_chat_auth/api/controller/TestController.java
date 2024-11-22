@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bakutaku.try_chat_auth.api.bean.form.TestUserResponse;
+import com.bakutaku.try_chat_auth.api.bean.form.response.TestUserResponse;
 
 /**
  * 動作テスト用のコントローラー

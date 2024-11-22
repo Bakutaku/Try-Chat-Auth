@@ -1,4 +1,4 @@
-package com.bakutaku.try_chat_auth.api.bean.form;
+package com.bakutaku.try_chat_auth.api.bean.form.response;
 
 import java.util.Date;
 
