@@ -38,6 +38,8 @@ public class Answer {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
+  private String userId;
+
   @Lob
   @Column(columnDefinition = "TEXT")
   private String nodes; // ノード
