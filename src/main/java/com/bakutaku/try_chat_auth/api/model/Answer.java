@@ -35,7 +35,11 @@ public class Answer {
 
   @Lob
   @Column(columnDefinition = "TEXT")
-  private String note; // 投稿内容
+  private String nodes; // ノード
+
+  @Lob
+  @Column(columnDefinition = "TEXT")
+  private String edges; // エッジ
 
   @OneToOne
   @MapsId

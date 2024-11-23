@@ -46,7 +46,11 @@ public class Question {
 
   @Lob
   @Column(columnDefinition = "TEXT")
-  private String note; // 投稿内容
+  private String nodes; // ノード
+
+  @Lob
+  @Column(columnDefinition = "TEXT")
+  private String edges; // エッジ
 
   @CreatedDate
   private Date createAt; // 投稿日
