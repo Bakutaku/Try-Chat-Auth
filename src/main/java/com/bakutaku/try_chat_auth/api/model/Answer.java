@@ -7,11 +7,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,8 @@ import lombok.NoArgsConstructor;
 public class Answer {
 
   @Id
-  private UUID questionId;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @Lob
   @Column(columnDefinition = "TEXT")
@@ -41,8 +43,7 @@ public class Answer {
   @Column(columnDefinition = "TEXT")
   private String edges; // エッジ
 
-  @OneToOne
-  @MapsId
+  @ManyToOne
   @JoinColumn(name = "question_id")
   private Question question;
 

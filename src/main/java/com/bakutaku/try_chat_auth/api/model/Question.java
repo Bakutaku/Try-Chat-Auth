@@ -1,6 +1,7 @@
 package com.bakutaku.try_chat_auth.api.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -15,8 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,8 +58,7 @@ public class Question {
   @LastModifiedDate
   private Date updateAt; // 更新日
 
-  @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
-  @PrimaryKeyJoinColumn
-  private Answer answer;
+  @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+  private List<Answer> answer;
 
 }

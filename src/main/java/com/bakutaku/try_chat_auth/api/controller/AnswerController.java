@@ -31,6 +31,7 @@ public class AnswerController {
 
   @PutMapping("/{id}")
   public ResponseEntity<?> update(@PathVariable UUID id) {
+
     return ResponseEntity.ok("");
   }
 
@@ -51,7 +52,8 @@ public class AnswerController {
 
     // 変換
     AnswerItemResponse item = AnswerItemResponse.builder()
-        .id(data.getQuestionId())
+        .id(data.getId())
+        .questionId(data.getQuestion().getId())
         .nodes(data.getNodes())
         .edges(data.getEdges())
         .build();
