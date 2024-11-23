@@ -21,7 +21,7 @@ import com.bakutaku.try_chat_auth.api.bean.form.response.data.QuestionItemRespon
 import com.bakutaku.try_chat_auth.api.bean.form.response.data.QuestionListResponse;
 import com.bakutaku.try_chat_auth.api.bean.form.response.data.QuestionPostResponse;
 import com.bakutaku.try_chat_auth.api.model.Question;
-import com.bakutaku.try_chat_auth.api.service.TryChatService;
+import com.bakutaku.try_chat_auth.api.service.QuestionService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +32,10 @@ import lombok.RequiredArgsConstructor;
 @RestController // おまじないみたいなもの
 @RequestMapping("/api/question") // URLの指定
 @RequiredArgsConstructor // インスタンス自動生成
-public class TryChatController {
+public class QuestionController {
 
   // 処理が記述されたサービス
-  private final TryChatService service;
+  private final QuestionService service;
 
   /**
    * 質問の投稿
@@ -65,6 +65,9 @@ public class TryChatController {
             .build()));
   }
 
+  /**
+   * 質問一覧取得
+   */
   @GetMapping()
   public ResponseEntity<?> list() {
     // 処理を実行
@@ -94,6 +97,9 @@ public class TryChatController {
     return ResponseEntity.ok(new SuccessResponse<>(list));
   }
 
+  /**
+   * 質問詳細
+   */
   @GetMapping("/{id}")
   public ResponseEntity<?> item(@PathVariable UUID id) {
     // 処理を実行

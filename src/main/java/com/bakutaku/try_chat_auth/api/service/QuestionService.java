@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor // インスタンス自動生成
-public class TryChatService {
+public class QuestionService {
 
   // データベース
   private final QuestionRepository questionRep; // 質問
