@@ -8,15 +8,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 質問詳細取得のレスポンス
+ */
 @Data // getterやsetterの追加
 @Builder // コンストラクタを使用しないインスタンス生成するメソッドの追加
 @NoArgsConstructor // 引数を必要としないコンストラクタ追加
 @AllArgsConstructor // 属性すべてを必要とするコンストラクタ
-/**
- * 質問投稿のレスポンス用
- */
-public class PostResponse {
-  private UUID id; // 質問ID
+public class QuestionItemResponse {
+  private UUID id;
+  private String userID; // 投稿者
   private String title; // タイトル
-  private Date time; // 時間
+  private String explanation; // 説明
+  private String nodes; // ノード
+  private String edges; // エッジ
+  private Date createAt; // 投稿日
+  private Date updateAt; // 更新日
 }
