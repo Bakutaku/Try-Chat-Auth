@@ -45,6 +45,7 @@ public class QuestionService {
 
     answer.setQuestion(question);
     answer.setNodes(req.getNodes());
+    answer.setEdges(req.getEdges());
 
     // 保存
     Question rs = questionRep.save(question);
