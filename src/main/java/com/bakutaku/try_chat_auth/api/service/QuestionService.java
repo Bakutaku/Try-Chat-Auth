@@ -11,6 +11,7 @@ import com.bakutaku.try_chat_auth.api.bean.form.request.QuestionPostRequest;
 import com.bakutaku.try_chat_auth.api.model.Question;
 import com.bakutaku.try_chat_auth.api.repository.QuestionRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -29,6 +30,7 @@ public class QuestionService {
   /**
    * 質問投稿
    */
+  @Transactional(rollbackOn = Exception.class) // 例外時にロールバックを行ってくれるもの
   public Optional<Question> post(QuestionPostRequest req, Authentication auth) {
 
     // 保存するデータ作成
