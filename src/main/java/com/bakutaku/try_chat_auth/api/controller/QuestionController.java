@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 
+import com.bakutaku.try_chat_auth.api.bean.form.request.ListRequest;
 import com.bakutaku.try_chat_auth.api.bean.form.request.QuestionPostRequest;
 import com.bakutaku.try_chat_auth.api.bean.form.response.ErrorResponse;
 import com.bakutaku.try_chat_auth.api.bean.form.response.SuccessResponse;
 import com.bakutaku.try_chat_auth.api.bean.form.response.data.QuestionItemResponse;
+import com.bakutaku.try_chat_auth.api.bean.form.response.data.QuestionListPageResponse;
 import com.bakutaku.try_chat_auth.api.bean.form.response.data.QuestionListResponse;
 import com.bakutaku.try_chat_auth.api.bean.form.response.data.QuestionPostResponse;
 import com.bakutaku.try_chat_auth.api.model.Question;
@@ -69,9 +72,9 @@ public class QuestionController {
    * 質問一覧取得
    */
   @GetMapping()
-  public ResponseEntity<?> list() {
+  public ResponseEntity<?> list(@Valid @RequestBody ListRequest req) {
     // 処理を実行
-    Optional<List<Question>> rs = service.list();
+    Page<Question> rs = service.list(req);
 
     // 結果がなければ
     if (rs.isEmpty()) {
@@ -81,7 +84,7 @@ public class QuestionController {
     }
 
     // 結果取り出し
-    List<Question> items = rs.get();
+    List<Question> items = rs.getContent();
 
     // 変換
     List<QuestionListResponse> list = items.stream().map(
@@ -94,7 +97,16 @@ public class QuestionController {
             .build())
         .toList();
 
-    return ResponseEntity.ok(new SuccessResponse<>(list));
+    // レスポンスデータ作成
+    QuestionListPageResponse data = QuestionListPageResponse.builder()
+        .items(list)
+        .currentPage(rs.getNumber())
+        .pageSize(rs.getSize())
+        .totalPage(rs.getTotalPages())
+        .total(rs.getTotalElements())
+        .build();
+
+    return ResponseEntity.ok(new SuccessResponse<>(data));
   }
 
   /**

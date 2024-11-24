@@ -1,12 +1,16 @@
 package com.bakutaku.try_chat_auth.api.service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.bakutaku.try_chat_auth.api.bean.form.request.ListRequest;
 import com.bakutaku.try_chat_auth.api.bean.form.request.QuestionPostRequest;
 import com.bakutaku.try_chat_auth.api.model.Question;
 import com.bakutaku.try_chat_auth.api.repository.QuestionRepository;
@@ -53,13 +57,16 @@ public class QuestionService {
    * 質問一覧取得
    */
   @Transactional(rollbackOn = Exception.class) // 例外時にロールバックを行ってくれるもの
-  public Optional<List<Question>> list() {
+  public Page<Question> list(ListRequest req) {
+
+    // 取得範囲 & ソート設定
+    Pageable pageable = PageRequest.of(req.getPage(), req.getSize(), Sort.by(Sort.Direction.DESC, "createAt"));
 
     // データ取得
-    List<Question> items = questionRep.findAll();
+    Page<Question> items = questionRep.findAll(pageable);
 
     // 結果を返す
-    return Optional.ofNullable(items);
+    return items;
 
   }
 
