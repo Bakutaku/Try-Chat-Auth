@@ -52,6 +52,7 @@ public class QuestionService {
   /**
    * 質問一覧取得
    */
+  @Transactional(rollbackOn = Exception.class) // 例外時にロールバックを行ってくれるもの
   public Optional<List<Question>> list() {
 
     // データ取得
@@ -62,6 +63,12 @@ public class QuestionService {
 
   }
 
+  /**
+   * 詳細取得
+   * 
+   * @param id 投稿ID
+   */
+  @Transactional(rollbackOn = Exception.class) // 例外時にロールバックを行ってくれるもの
   public Optional<Question> item(UUID id) {
 
     // データ取得 & 結果を返す

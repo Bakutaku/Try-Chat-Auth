@@ -1,5 +1,6 @@
 package com.bakutaku.try_chat_auth.api.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ public class AnswerService {
   /**
    * 回答詳細取得
    */
+  @Transactional(rollbackOn = Exception.class) // 例外時にロールバックを行ってくれるもの
   public Optional<Answer> item(UUID id) {
     // 取得 & 返す
     return answerRep.findById(id);
@@ -76,6 +78,21 @@ public class AnswerService {
 
     // 保存 & 結果を返す
     return Optional.ofNullable(answerRep.save(answer));
+  }
+
+  /**
+   * 一覧取得
+   * 
+   * @param id 投稿ID
+   */
+  @Transactional(rollbackOn = Exception.class) // 例外時にロールバックを行ってくれるもの
+  public List<Answer> list(UUID id) {
+
+    // データ取得
+    List<Answer> items = answerRep.findByQuestionId(id);
+
+    // 結果を返す
+    return items;
   }
 
 }
