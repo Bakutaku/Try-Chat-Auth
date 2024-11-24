@@ -1,5 +1,6 @@
 package com.bakutaku.try_chat_auth.api.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.bakutaku.try_chat_auth.api.bean.form.request.ListRequest;
 import com.bakutaku.try_chat_auth.api.bean.form.request.QuestionPostRequest;
+import com.bakutaku.try_chat_auth.api.model.Answer;
 import com.bakutaku.try_chat_auth.api.model.Question;
 import com.bakutaku.try_chat_auth.api.repository.QuestionRepository;
 
@@ -37,14 +39,26 @@ public class QuestionService {
   @Transactional(rollbackOn = Exception.class) // 例外時にロールバックを行ってくれるもの
   public Optional<Question> post(QuestionPostRequest req, Authentication auth) {
 
+    // ユーザID取得
+    String userId = authService.getUserId(auth).get();
+
     // 保存するデータ作成
+    var answer = Answer.builder()
+        .userId(userId)
+        .nodes(req.getNodes())
+        .edges(req.getEdges())
+        .build();
+
     var question = Question.builder()
         .title(req.getTitle()) // タイトル
         .explanation(req.getExplanation()) // 説明
         .nodes(req.getNodes()) // 内容(JSON)
         .edges(req.getEdges()) // 内容(JSON)
-        .userId(authService.getUserId(auth).get())
+        .userId(userId)
+        .answer(List.of(answer))
         .build();
+
+    answer.setQuestion(question);
 
     // 保存
     Question rs = questionRep.save(question);
