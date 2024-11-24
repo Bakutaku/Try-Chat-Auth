@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder // コンストラクタを使用しないインスタンス生成するメソッドの追加
 @NoArgsConstructor // 引数を必要としないコンストラクタ追加
 @AllArgsConstructor // 属性すべてを必要とするコンストラクタ
-public class AnswerUpdateRequest {
+public class AnswerPostRequest {
   @NotNull
   private String nodes; // ノード
 
