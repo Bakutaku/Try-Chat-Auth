@@ -42,6 +42,8 @@ public class Question {
 
   private String title; // タイトル
 
+  @Lob
+  @Column(columnDefinition = "TEXT")
   private String explanation; // 説明
 
   @Lob

@@ -27,7 +27,7 @@ public class SecurityConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // セッションの無効化
         .csrf(csrf -> csrf.disable()) // CSRFを無効化
         .authorizeHttpRequests(auth -> auth
-            // .requestMatchers("/api/question/**").permitAll()
+            .requestMatchers("/api/question/public").permitAll() // リストのみ権限不要
             .anyRequest().authenticated()) // 全てのリクエストに認証を求める
         .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))) // Keycloakとの連携設定
     ;

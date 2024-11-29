@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 
@@ -71,10 +72,10 @@ public class QuestionController {
   /**
    * 質問一覧取得
    */
-  @GetMapping()
-  public ResponseEntity<?> list(@Valid @RequestBody ListRequest req) {
+  @GetMapping("/public")
+  public ResponseEntity<?> list(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     // 処理を実行
-    Page<Question> rs = service.list(req);
+    Page<Question> rs = service.list(ListRequest.builder().page(page).size(size).build());
 
     // 結果がなければ
     if (rs.isEmpty()) {
@@ -104,6 +105,7 @@ public class QuestionController {
         .pageSize(rs.getSize())
         .totalPage(rs.getTotalPages())
         .total(rs.getTotalElements())
+        .next(rs.hasNext())
         .build();
 
     return ResponseEntity.ok(new SuccessResponse<>(data));

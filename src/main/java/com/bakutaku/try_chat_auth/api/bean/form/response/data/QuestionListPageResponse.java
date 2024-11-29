@@ -17,4 +17,5 @@ public class QuestionListPageResponse {
   private int pageSize; // 1ページあたりのサイズ
   private int totalPage; // 全ページ数
   private long total; // 全データ数
+  private boolean next; // 次のページがあるか
 }
